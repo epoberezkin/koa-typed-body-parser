@@ -1,6 +1,6 @@
 {
   "name": "koa-typed-body-parser",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Uses Ajv compiled parsers based on JTD schemas to parse koa request JSON body",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
