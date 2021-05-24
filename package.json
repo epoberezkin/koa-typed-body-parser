@@ -1,0 +1,62 @@
+{
+  "name": "koa-typed-body-parser",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "prettier:write": "prettier --write './**/*.{json,yaml,js,ts}'",
+    "test": "eslint . --ext .ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/epoberezkin/koa-typed-body-parser.git"
+  },
+  "keywords": [
+    "koa",
+    "body-parser",
+    "jtd",
+    "ajv"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/epoberezkin/koa-typed-body-parser/issues"
+  },
+  "homepage": "https://github.com/epoberezkin/koa-typed-body-parser#readme",
+  "peerDependencies": {
+    "ajv": "^8.5.0"
+  },
+  "peerDependenciesMeta": {
+    "ajv": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "co-body": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/co-body": "^5.1.0",
+    "@types/koa": "^2.13.1",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "ajv": "^8.5.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^6.0.0",
+    "koa": "^2.13.1",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.0",
+    "typescript": "^4.2.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged && npm test"
+    }
+  },
+  "lint-staged": {
+    "*.{json,yaml,js,ts}": "prettier --write"
+  }
+}
