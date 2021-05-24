@@ -5,9 +5,11 @@ import {text} from "co-body"
 
 type ARecord<T = unknown> = Record<string, T>
 
-export type KoaContext<Props extends ARecord = ARecord<never>, T = unknown> = Context & {
+export type KoaContext<Props extends ARecord = ARecord<never>, T = unknown> = _KoaContext<T> & Props
+
+interface _KoaContext<T> extends Context {
   request: KoaRequest<T>
-} & Props
+}
 
 interface KoaRequest<T = unknown> extends Request {
   body: T
