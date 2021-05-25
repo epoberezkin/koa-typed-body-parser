@@ -1,11 +1,10 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import type Ajv from "ajv/dist/jtd"
 import type {JTDSchemaType} from "ajv/dist/jtd"
 import type {Context, Request} from "koa"
 import {text} from "co-body"
 
-type ARecord<T = unknown> = Record<string, T>
-
-export type KoaContext<Props extends ARecord = ARecord<never>, T = unknown> = _KoaContext<T> & Props
+export type KoaContext<Props extends object = Record<string, never>, T = unknown> = _KoaContext<T> & Props
 
 interface _KoaContext<T> extends Context {
   request: KoaRequest<T>
@@ -15,11 +14,11 @@ interface KoaRequest<T = unknown> extends Request {
   body: T
 }
 
-type Handler<P extends ARecord, T = unknown> = (cxt: KoaContext<P, T>) => Promise<void>
+type Handler<P extends object, T = unknown> = (cxt: KoaContext<P, T>) => Promise<void>
 
-type BodyParser<P extends ARecord> = <T>(schema: JTDSchemaType<T>, handler: Handler<P, T>) => Handler<P>
+type BodyParser<P extends object> = <T>(schema: JTDSchemaType<T>, handler: Handler<P, T>) => Handler<P>
 
-export default function getParseBody<P extends ARecord = ARecord<never>>(ajv: Ajv): BodyParser<P> {
+export default function getParseBody<P extends object = Record<string, never>>(ajv: Ajv): BodyParser<P> {
   return <T>(schema: JTDSchemaType<T>, handler: Handler<P, T>): Handler<P> => {
     const parse = ajv.compileParser(schema)
 
@@ -39,7 +38,7 @@ export default function getParseBody<P extends ARecord = ARecord<never>>(ajv: Aj
 
 const jsonTypes = ["json", "application/*+json"]
 
-async function jsonBodyStr<P extends ARecord>(cxt: KoaContext<P>): Promise<string | undefined> {
+async function jsonBodyStr<P extends object>(cxt: KoaContext<P>): Promise<string | undefined> {
   if (cxt.request.is(jsonTypes)) return text(cxt.request)
   const type = cxt.request.headers["content-type"] || ""
   cxt.status = 415
