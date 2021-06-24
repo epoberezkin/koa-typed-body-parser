@@ -24,7 +24,7 @@ export default function getParseBody<P extends object = Record<string, never>>(a
 
     return async (cxt: KoaContext<P>): Promise<void> => {
       const str = await jsonBodyStr(cxt)
-      const data = str && parse(str)
+      const data = str !== undefined && parse(str)
       if (data === undefined) {
         cxt.status = 400
         cxt.body = {error: parse.message}
